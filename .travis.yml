@@ -1,0 +1,40 @@
+notifications:
+  email: false
+
+# Quick boot options
+sudo: false
+cache:
+  directories:
+    - node_modules
+
+# Ignore version tags
+branches:
+  except:
+    - /^v[0-9]/
+
+env:
+  global:
+    # CODECLIMATE_REPO_TOKEN
+    - secure:
+
+# Language options
+language: node_js
+node_js:
+  - 4
+before_script:
+  - npm prune
+script:
+  - npm run cover
+  - npm run lint
+
+# Npm publish options
+before_deploy:
+  - npm run build
+deploy:
+  skip_cleanup: true # keep the devDependencies
+  provider: npm
+  email: i59naga@icloud.com
+  api_key:
+    secure: pU8xnlj+BeYhTyYKXchkTLPfOZYMdYLcFPWVYngVe+Za5ZKjXLzvqizkkc1P8UM0B8SrK3Z05gHcr+7Jo+RCdZ8Jx0E8moB4lU3Ws5p8gzcBR9x417WZxtgqV3LSBXqbZ13tSNt3j6vp5zF2vdKkpXRSEntP7AYlKHeDZm1ZACy1RUbIyBus4uj8oTRos0jmFJsScD4HmdMCtQEQoXby+RqoKmfuB6dTWJRS1zVYCJqwB3O+7Gl//ejNztHZ1lam8yjRbI8ha72XAIibnwnkFzVyYBfhLgaYgxkTPDkGXYkORTcTsRJRR+hIFt8RUWq4EKV6Jgw4HSDdPmQyue1FcEoHC1dUj0VN36CMcCoElxj+vPAJEXoOg9QuPPsLS7xCu9iNUB8DCzceB4d6lHixiBrDrmYN2sCg9oQ2rzt4Ik/UpW9uGGBpv2sVYKby1584xNOLgdpwFVGBZsaD3D7fUwzX/vmWT7H5mbxp8xStKJMCisrbgcWTgLs940JAyrv8S6DCMiHYHwhKEe6YYRbnPuWdfE/FTYKAcWCU5PvNRYn2ZspP0vi4Dm7d/c4wHc6G41GBqvEO8eX9RRSW5VxuBlMvtQru9fSCML3GUGjmbp1N2UNrhAMXV9bYXhTIVwKG6q60AOyR185Mw0TWOa2QfrMcxlZh7UX6VrBpKgyyVEg=
+  on:
+    node: 4
