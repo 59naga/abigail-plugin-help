@@ -28,7 +28,7 @@ npm install abigail-plugin-help --save
 See also
 ---
 * [abigailjs/abigail](https://github.com/abigailjs/abigail)
-* [abigailjs/abigail-plugin](https://github.com/abigail-pluginjs/abigail)
+* [abigailjs/abigail-plugin](https://github.com/abigail/abigail-plugin)
 
 Development
 ---
