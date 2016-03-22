@@ -12,7 +12,7 @@ export default class Exit extends Plugin {
              (_||_)|(_)(_|||    ${chalk.grey(`v${meta.version}`)}
              _/                 ${chalk.grey.inverse('a minimal task runner.')}
 
-                       ${chalk.white.underline('github.com/abigailjs/abigail#usage')}
+                    ${chalk.white.underline('github.com/abigailjs/abigail#usage')}
   `);
 
   /**
