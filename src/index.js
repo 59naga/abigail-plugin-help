@@ -1,17 +1,18 @@
 // dependencies
+import Plugin from 'abigail-plugin';
 import chalk from 'chalk';
 import meta from 'abigail/package.json';
-import Plugin from 'abigail-plugin';
+import flattenDeep from 'lodash.flattendeep';
 
-// main
-export default class Help extends Plugin {
+// @class Exit
+export default class Exit extends Plugin {
   static output = chalk.magenta(String.raw`
 
               _ |_ . _  _ .|
              (_||_)|(_)(_|||    ${chalk.grey(`v${meta.version}`)}
              _/                 ${chalk.grey.inverse('a minimal task runner.')}
 
-                       ${chalk.white.underline('github.com/59naga/abigail#usage')}
+                       ${chalk.white.underline('github.com/abigailjs/abigail#usage')}
   `);
 
   /**
@@ -19,9 +20,17 @@ export default class Help extends Plugin {
   * @returns {undefined}
   */
   pluginWillAttach() {
-    this.parent.removeAllListeners();
+    const task = this.parent.task || [];
+    if (task.length) {
+      this.parent.once('task-end', (results) => {
+        const scripts = flattenDeep(results);
+        const code = scripts.reduce((prev, current) => prev > 0 || current.exitCode > 0 ? 1 : 0, 0);
+        this.parent.once('exit', () => this.opts.process.exit(code));
+      });
+      return;
+    }
 
-    this.opts.process.stdout.write(Help.output);
+    this.opts.process.stdout.write(this.constructor.output);
     this.opts.process.stdout.write('\n');
     this.opts.process.exit(1);
   }
