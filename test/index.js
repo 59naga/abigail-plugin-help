@@ -37,7 +37,6 @@ describe('Exit', () => {
     it('if the exit code of the task is all 0, it should be exit in 0', () => {
       const emitter = new AsyncEmitter;
       const process = createProcess();
-
       // eslint-disable-next-line no-unused-vars
       const exit = new Exit(emitter, true, { process });
 
@@ -57,7 +56,6 @@ describe('Exit', () => {
     it('unless the exit code of the task is all 0, it should be exit in 1', () => {
       const emitter = new AsyncEmitter;
       const process = createProcess();
-
       // eslint-disable-next-line no-unused-vars
       const exit = new Exit(emitter, true, { process });
 
@@ -71,6 +69,24 @@ describe('Exit', () => {
       .then(() => {
         assert(process.exit.calledOnce);
         assert(process.exit.args[0][0] === 1);
+      });
+    });
+
+    it('if abort is executed, it should stop listen of exit', () => {
+      const emitter = new AsyncEmitter;
+      const process = createProcess();
+      const exit = new Exit(emitter, true, { process });
+
+      emitter.task = [[[
+        { main: { raw: 'echo foo' } },
+      ]]];
+
+      return emitter.emit('attach-plugins')
+      .then(() => emitter.emit('task-end', [{ exitCode: 0 }]))
+      .then(() => exit.abort())
+      .then(() => emitter.emit('exit'))
+      .then(() => {
+        assert(process.exit.calledOnce === false);
       });
     });
   });
