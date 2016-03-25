@@ -24,6 +24,32 @@ No installation
 
 > abigail built-in plugin
 
+Usage
+---
+if the task is not specified and this plugin is enabled, it to exit in 1.
+
+```bash
+abby && echo pass || echo fail
+#              _ |_ . _  _ .|
+#             (_||_)|(_)(_|||    v1.0.0
+#             _/                 a minimal task runner.
+#
+#                    github.com/abigailjs/abigail#usage
+# fail
+```
+
+moreover. unless the task exit code are all 0, it to exit in 1.
+
+```bash
+abby test lint --no-watch && echo pass || echo fail
+# ...
+# +    1 ms @_@ task end test, lint. exit code 0, 1.
+# +    1 ms @_@; i'm terribly sorry...
+# fail
+```
+
+the latter is turned off by the [abigail-plugin-watch](https://github.com/abigailjs/abigail-plugin-watch#usage).
+
 See also
 ---
 * [abigailjs/abigail](https://github.com/abigailjs/abigail)
