@@ -30,6 +30,7 @@ if the task is not specified and this plugin is enabled, it to exit in 1.
 
 ```bash
 abby && echo pass || echo fail
+#
 #              _ |_ . _  _ .|
 #             (_||_)|(_)(_|||    v1.0.0
 #             _/                 a minimal task runner.
@@ -52,8 +53,8 @@ the latter is turned off by the [abigail-plugin-watch](https://github.com/abigai
 
 See also
 ---
-* [abigailjs/abigail](https://github.com/abigailjs/abigail)
-* [abigailjs/abigail-plugin](https://github.com/abigailjs/abigail-plugin)
+* [abigailjs/abigail](https://github.com/abigailjs/abigail#usage)
+* [abigailjs/abigail-plugin](https://github.com/abigailjs/abigail-plugin#usage)
 
 Development
 ---
