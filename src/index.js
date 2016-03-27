@@ -20,7 +20,7 @@ export default class Exit extends Plugin {
   * @returns {undefined}
   */
   pluginWillAttach() {
-    const task = this.parent.task || [];
+    const task = this.getProps().task || [];
     if (task.length) {
       this.subscribe('task-end', (results) => {
         const scripts = flattenDeep(results);

@@ -40,9 +40,11 @@ describe('Exit', () => {
       // eslint-disable-next-line no-unused-vars
       const exit = new Exit(emitter, true, { process });
 
-      emitter.task = [[[
-        { main: { raw: 'echo foo' } },
-      ]]];
+      exit.setProps({
+        task: [[[
+          { main: { raw: 'echo foo' } },
+        ]]],
+      });
 
       return emitter.emit('attach-plugins')
       .then(() => emitter.emit('task-end', [{ exitCode: 0 }]))
@@ -59,9 +61,11 @@ describe('Exit', () => {
       // eslint-disable-next-line no-unused-vars
       const exit = new Exit(emitter, true, { process });
 
-      emitter.task = [[[
-        { main: { raw: 'echo foo' } },
-      ]]];
+      exit.setProps({
+        task: [[[
+          { main: { raw: 'echo foo' } },
+        ]]],
+      });
 
       return emitter.emit('attach-plugins')
       .then(() => emitter.emit('task-end', [{ exitCode: 1 }]))
@@ -77,9 +81,11 @@ describe('Exit', () => {
       const process = createProcess();
       const exit = new Exit(emitter, true, { process });
 
-      emitter.task = [[[
-        { main: { raw: 'echo foo' } },
-      ]]];
+      exit.setProps({
+        task: [[[
+          { main: { raw: 'echo foo' } },
+        ]]],
+      });
 
       return emitter.emit('attach-plugins')
       .then(() => emitter.emit('task-end', [{ exitCode: 0 }]))
