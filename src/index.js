@@ -1,12 +1,13 @@
 // dependencies
 import Plugin from 'abigail-plugin';
 import chalk from 'chalk';
+import stringRaw from 'string-raw';
 import meta from 'abigail/package.json';
 import flattenDeep from 'lodash.flattendeep';
 
 // @class Exit
 export default class Exit extends Plugin {
-  static output = chalk.magenta(String.raw`
+  static output = chalk.magenta(stringRaw`
 
               _ |_ . _  _ .|
              (_||_)|(_)(_|||    ${chalk.grey(`v${meta.version}`)}

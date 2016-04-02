@@ -8,7 +8,8 @@
   ],
   "dependencies": {
     "chalk": "^1.1.1",
-    "lodash.flattendeep": "^4.1.0"
+    "lodash.flattendeep": "^4.1.0",
+    "string-raw": "^1.0.0"
   },
   "scripts": {
     "start": "abby test",
