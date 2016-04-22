@@ -51,6 +51,37 @@ abby test lint --no-watch && echo pass || echo fail
 
 the latter is turned off by the [abigail-plugin-watch](https://github.com/abigailjs/abigail-plugin-watch#usage).
 
+## switch to strict mode
+
+if specify `--exit strict`, it exits in 1 when detect `stderr`.
+
+```bash
+abby webpack --parse raw --no-watch --exit strict
+# +    1 ms @_@ task start build.
+# ERROR in Entry module not found: Error: Cannot resolve module 'babel' in /Users/59naga/Downloads/boilerplate-browser-babel
+# +    1 ms @_@ task end build. exit code 1.
+# +    1 ms @_@; i'm terribly sorry...
+
+# without `strict` becomes exit in 0
+abby webpack --parse raw --no-watch
+# ...
+# +    1 ms @_@ task end build. exit code 0.
+```
+
+use `abigail.plugins.exit` field in `package.json`
+---
+
+```js
+{
+  // ...
+  "abigail": {
+    "plugins": {
+      "exit": "strict"
+    }
+  }
+}
+```
+
 See also
 ---
 * [abigailjs/abigail](https://github.com/abigailjs/abigail#usage)
