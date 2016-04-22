@@ -21,12 +21,20 @@ export default class Exit extends Plugin {
   * @returns {undefined}
   */
   pluginWillAttach() {
+    let strictCode = 0;
+    const isStrict = this.opts.value === 'strict' || this.opts.strict;
+    if (isStrict) {
+      this.opts.process.stderr.on('data', () => {
+        strictCode = 1;
+      });
+    }
+
     const task = this.getProps().task || [];
     if (task.length) {
       this.subscribe('task-end', (results) => {
         const scripts = flattenDeep(results);
         const code = scripts.reduce((prev, current) => prev > 0 || current.exitCode > 0 ? 1 : 0, 0);
-        this.subscribe('exit', () => this.opts.process.exit(code), true);
+        this.subscribe('exit', () => this.opts.process.exit(code || strictCode), true);
       }, true);
       return;
     }

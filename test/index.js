@@ -8,13 +8,20 @@ import meta from 'abigail/package.json';
 import Exit from '../src';
 
 // fixture
-const createProcess = () => ({
-  cwd: () => process.cwd(),
-  exit: sinon.spy(),
-  stdout: {
-    write: sinon.spy(),
-  },
-});
+const createProcess = () => {
+  const stderr = new AsyncEmitter;
+  stderr.write = sinon.spy((data) => {
+    stderr.emit('data', data);
+  });
+  return {
+    cwd: () => process.cwd(),
+    exit: sinon.spy(),
+    stdout: {
+      write: sinon.spy(),
+    },
+    stderr,
+  };
+};
 
 // specs
 describe('Exit', () => {
@@ -93,6 +100,27 @@ describe('Exit', () => {
       .then(() => emitter.emit('exit'))
       .then(() => {
         assert(process.exit.calledOnce === false);
+      });
+    });
+
+    it('if strict is true, it should be exit in 1 when receive stderr', () => {
+      const emitter = new AsyncEmitter;
+      const process = createProcess();
+      const exit = new Exit(emitter, 'strict', { process });
+
+      exit.setProps({
+        task: [[[
+          { main: { raw: 'echo foo' } },
+        ]]],
+      });
+
+      return emitter.emit('attach-plugins')
+      .then(() => emitter.emit('task-end', [{ exitCode: 0 }]))
+      .then(() => process.stderr.write('module not found in webpack'))
+      .then(() => emitter.emit('exit'))
+      .then(() => {
+        assert(process.exit.callCount === 1);
+        assert(process.exit.args[0][0] === 1);
       });
     });
   });
